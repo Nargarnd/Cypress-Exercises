@@ -11,9 +11,6 @@ class AuthToken {
 }
 
 export function getAuthToken(): Cypress.Chainable<AuthToken> {
-    cy.log(Cypress.env('api_username'))
-    cy.log(Cypress.env('api_password'))
-
     return cy.request({
         method: 'POST',
         url: "/auth/login",
@@ -36,4 +33,9 @@ export function getAuthToken(): Cypress.Chainable<AuthToken> {
 
 export function getAccessToken(): string {
     return token.access_token
-  }
+}
+
+export function getBearer(): string {
+  return `bearer ${token.access_token}`
+}
+
