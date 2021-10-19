@@ -6,59 +6,59 @@ Feature: Contacts API
         Given The contacts api is up and running
 
     Scenario Outline: Create a contact
-        When I call the create contact endpoint to create "<contact_example>"
+        When I call the create contact endpoint to create "<created_contact>"
         Then I get confirmation of the contact creation
         Examples:
-        | contact_example   |
+        | created_contact   |
         | contact_1         |
 
     Scenario Outline: Delete a contact
-        Given I call the create contact endpoint to create "<contact_example>"
+        Given I call the create contact endpoint to create "<created_contact>"
         When I call the delete endpoint using the created contact information
         Then I get confirmation of the contact deletion
         Examples:
-        | contact_example   |
+        | created_contact   |
         | contact_2         |
 
     Scenario Outline: Get all contacts
-        Given I call the create contact endpoint to create "<contact_example>"
-        And I call the create contact endpoint to create "<contact_example_2>"
+        Given I call the create contact endpoint to create "<created_contact>"
+        And I call the create contact endpoint to create "<created_contact_2>"
         When I call the all contacts endpoint
-        Then I get a list of contacts
+        Then I get a list of "2" contacts
         Examples:
-        | contact_example   | contact_example_2   |
+        | created_contact   | created_contact_2   |
         | contact_1         | contact_2           |
 
     Scenario Outline: Get a specific contact
-        Given I call the create contact endpoint to create "<contact_example>"
+        Given I call the create contact endpoint to create "<created_contact>"
         When I call the get contact endpoint for the created contact
         Then I get the desired contact
         Examples:
-        | contact_example   |
+        | created_contact   |
         | contact_1         |
 
     Scenario Outline: Update a contact
-        Given I call the create contact endpoint to create "<contact_example>"
-        When I call the update contact endpoint for the created contact with data like "<contact_example_2>"
+        Given I call the create contact endpoint to create "<created_contact>"
+        When I call the update contact endpoint for the created contact with data like "<modified_contact>"
         Then I get confirmation of the contact modification
         Examples:
-        | contact_example   | contact_example_2  |
+        | created_contact   | modified_contact   |
         | contact_1         | contact_1_modified |
 
      Scenario Outline: Search a contact by name
-        Given I call the create contact endpoint to create "<contact_example>"
-        And I call the create contact endpoint to create "<contact_example_2>"
+        Given I call the create contact endpoint to create "<created_contact>"
+        And I call the create contact endpoint to create "<created_contact_2>"
         When I call the search contact endpoint for the created contact filtering by name "test_name"
-        Then The search finds the unique desired contact "<contact_example>"
+        Then The search finds the unique desired contact "<created_contact>"
         Examples:
-        | contact_example   | contact_example_2   |
+        | created_contact   | created_contact_2   |
         | contact_1         | contact_2           |
 
     Scenario Outline: Search a contact by lastname
-        Given I call the create contact endpoint to create "<contact_example>"
-        And I call the create contact endpoint to create "<contact_example_2>"
+        Given I call the create contact endpoint to create "<created_contact>"
+        And I call the create contact endpoint to create "<created_contact_2>"
         When I call the search contact endpoint for the created contact filtering by lastname "test_lastname"
-        Then The search finds the unique desired contact "<contact_example>"
+        Then The search finds the unique desired contact "<created_contact>"
         Examples:
-        | contact_example   | contact_example_2   |
+        | created_contact   | created_contact_2   |
         | contact_1         | contact_2           |

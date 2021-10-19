@@ -1,3 +1,7 @@
+/**
+ * Definition of AuthToken Object that acts as a Singleton to host the granted token for the API
+ */
+
 let token: AuthToken
 
 class AuthToken {
@@ -10,6 +14,10 @@ class AuthToken {
   }
 }
 
+/**
+ * Get and AuthToken from the API and store it in the Singleton
+ * @returns 
+ */
 export function getAuthToken(): Cypress.Chainable<AuthToken> {
     return cy.request({
         method: 'POST',

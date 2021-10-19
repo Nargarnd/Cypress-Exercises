@@ -103,11 +103,11 @@ Then('I get confirmation of the contact modification', () => {
   })
 })
 
-Then('I get a list of contacts', () => {
+Then('I get a list of {string} contacts', (listSize:string) => {
    cy.get("@GetAllContactsResponse").then((response) => {
       const res = <Cypress.Response<any>> <unknown> response
       const contactsArray = <Array<any>> <unknown> res.body
-      expect(contactsArray.length).to.equal(2)
+      expect(contactsArray.length).to.equal(parseInt(listSize))
    })
 })
 

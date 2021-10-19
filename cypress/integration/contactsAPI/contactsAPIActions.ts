@@ -1,5 +1,5 @@
 /**
- * Basic functionality of the API
+ * Contains all the basic functionality of the API
  */
 
 import { getBearer } from "../common/AuthToken";
