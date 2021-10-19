@@ -44,3 +44,21 @@ Feature: Contacts API
         Examples:
         | contact_example   | contact_example_2  |
         | contact_1         | contact_1_modified |
+
+     Scenario Outline: Search a contact by name
+        Given I call the create contact endpoint to create "<contact_example>"
+        And I call the create contact endpoint to create "<contact_example_2>"
+        When I call the search contact endpoint for the created contact filtering by name "test_name"
+        Then The search finds the unique desired contact "<contact_example>"
+        Examples:
+        | contact_example   | contact_example_2   |
+        | contact_1         | contact_2           |
+
+    Scenario Outline: Search a contact by lastname
+        Given I call the create contact endpoint to create "<contact_example>"
+        And I call the create contact endpoint to create "<contact_example_2>"
+        When I call the search contact endpoint for the created contact filtering by lastname "test_lastname"
+        Then The search finds the unique desired contact "<contact_example>"
+        Examples:
+        | contact_example   | contact_example_2   |
+        | contact_1         | contact_2           |

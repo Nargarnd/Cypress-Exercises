@@ -46,6 +46,46 @@ export function deleteContact(contactId:string, failOnStatus:boolean = true):Cyp
     })
 }
 
+export function searchContactByName(firstName:string):Cypress.Chainable {
+    return cy.request({
+        method: 'GET',
+        url: "/api/v1/contacts/search",
+        headers: {
+          Authorization: getBearer(),
+        },
+        qs: {
+            first_name: firstName,
+        }
+    })
+}
+
+export function searchContactByLastName(lastName: string):Cypress.Chainable {
+    return cy.request({
+        method: 'GET',
+        url: "/api/v1/contacts/search",
+        headers: {
+          Authorization: getBearer(),
+        },
+        qs: {
+            last_name: lastName
+        }
+    })
+}
+
+export function searchContactByNameAndLastName(firstName:string, lastName: string):Cypress.Chainable {
+    return cy.request({
+        method: 'GET',
+        url: "/api/v1/contacts/search",
+        headers: {
+          Authorization: getBearer(),
+        },
+        qs: {
+            first_name: firstName,
+            last_name: lastName
+        }
+    })
+}
+
 export function updateContact(contactId:string, modifiedContact: any):Cypress.Chainable {
     return cy.request({
         method: 'PATCH',
@@ -54,5 +94,5 @@ export function updateContact(contactId:string, modifiedContact: any):Cypress.Ch
           Authorization: getBearer(),
         },
         body: modifiedContact
-      })
+    })
 }
