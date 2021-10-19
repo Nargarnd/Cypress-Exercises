@@ -4,7 +4,7 @@
 
 import { Before, Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import { getAuthToken, getBearer } from "../common/AuthToken"
-import { createContact, deleteContact, getAllContacts } from "./contactsAPIActions";
+import { createContact, deleteContact, getAllContacts, getContact } from "./contactsAPIActions";
 
 // This will get called before each scenario
 Before(() => {
@@ -39,6 +39,14 @@ When('I call the delete endpoint using the created contact information', () => {
   })
 })
 
+When('I call the get contact endpoint for the created contact', () => {
+  cy.get("@ContactCreationResponse").then((response) => {
+    const res = <Cypress.Response<any>> <unknown> response
+    console.log(res)
+    getContact(res.body.id).as("ContactGetResponse")
+  })
+})
+
  When('I call the all contacts endpoint', () => {
     getAllContacts().as("GetAllContactsResponse")
  })
@@ -64,10 +72,24 @@ Then('I get confirmation of the contact deletion', () => {
   })
 })
 
- Then('I get a list of contacts', () => {
+Then('I get a list of contacts', () => {
    cy.get("@GetAllContactsResponse").then((response) => {
       const res = <Cypress.Response<any>> <unknown> response
       const contactsArray = <Array<any>> <unknown> res.body
       expect(contactsArray.length).to.equal(2)
    })
+})
+
+Then('I get the desired contact', () => {
+  cy.get("@ContactGetResponse").then((response) => {
+    const res = <Cypress.Response<any>> <unknown> response
+    cy.get("@creationData").then((data) => {
+       const expectedData = <any> <unknown> data
+       expect(res.body.firstName).to.equal(expectedData.firstName)
+       expect(res.body.lastName).to.equal(expectedData.lastName)
+       expect(res.body.email).to.equal(expectedData.email)
+       expect(res.body.phone).to.equal(expectedData.phone)
+       expect(res.body.mobile).to.equal(expectedData.mobile)
+    })
+  })
 })

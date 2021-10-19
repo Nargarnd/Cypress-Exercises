@@ -14,6 +14,16 @@ export function getAllContacts():Cypress.Chainable {
     })
 }
 
+export function getContact(contactId:string):Cypress.Chainable {
+    return cy.request({
+        method: 'GET',
+        url: `/api/v1/contacts/${contactId}`,
+        headers: {
+          Authorization: getBearer(),
+        },
+    })
+}
+
 export function createContact(contact: any):Cypress.Chainable {
     return cy.request({
         method: 'POST',
@@ -24,8 +34,6 @@ export function createContact(contact: any):Cypress.Chainable {
         body: contact
       })
 }
-
-
 
 export function deleteContact(contactId:string, failOnStatus:boolean = true):Cypress.Chainable {
     return cy.request({

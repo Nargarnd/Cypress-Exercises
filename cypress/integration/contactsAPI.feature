@@ -20,7 +20,7 @@ Feature: Contacts API
         | contact_example   |
         | contact_2         |
 
-    Scenario Outline: Get All Contacts
+    Scenario Outline: Get all contacts
         Given I call the create contact endpoint to create "<contact_example>"
         And I call the create contact endpoint to create "<contact_example_2>"
         When I call the all contacts endpoint
@@ -28,3 +28,11 @@ Feature: Contacts API
         Examples:
         | contact_example   | contact_example_2   |
         | contact_1         | contact_2           |
+
+    Scenario Outline: Get a specific contact
+        Given I call the create contact endpoint to create "<contact_example>"
+        When I call the get contact endpoint for the created contact
+        Then I get the desired contact
+        Examples:
+        | contact_example   |
+        | contact_1         |
