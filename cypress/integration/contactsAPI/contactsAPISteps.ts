@@ -26,7 +26,7 @@ Before(() => {
 
 Given
 When('I call the create contact endpoint to create {string}', (fixtureName:string) => {
-  cy.fixture(fixtureName).then((contactData) => {
+  cy.fixture(fixtureName).as("creationData").then((contactData) => {
     createContact(contactData).as("ContactCreationResponse")
   })
 })
@@ -46,7 +46,14 @@ When('I call the delete endpoint using the created contact information', () => {
  Then('I get confirmation of the contact creation', () => {
   cy.get("@ContactCreationResponse").then((response) => {
      const res = <Cypress.Response<any>> <unknown> response
-     console.log(res)
+     cy.get("@creationData").then((data) => {
+        const expectedData = <any> <unknown> data
+        expect(res.body.firstName).to.equal(expectedData.firstName)
+        expect(res.body.lastName).to.equal(expectedData.lastName)
+        expect(res.body.email).to.equal(expectedData.email)
+        expect(res.body.phone).to.equal(expectedData.phone)
+        expect(res.body.mobile).to.equal(expectedData.mobile)
+     })
   })
 })
 
@@ -60,6 +67,7 @@ Then('I get confirmation of the contact deletion', () => {
  Then('I get a list of contacts', () => {
    cy.get("@GetAllContactsResponse").then((response) => {
       const res = <Cypress.Response<any>> <unknown> response
-      console.log(res)
+      const contactsArray = <Array<any>> <unknown> res.body
+      expect(contactsArray.length).to.equal(2)
    })
 })
