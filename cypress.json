@@ -1,3 +1,7 @@
 {
-    "testFiles": "**/*.feature"
+    "testFiles": "**/*.feature",
+    "baseUrl": "http://127.0.0.1:8000",
+    "env": {
+        "api_username": "test_user"
+      }
 }
