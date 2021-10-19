@@ -45,3 +45,14 @@ export function deleteContact(contactId:string, failOnStatus:boolean = true):Cyp
         failOnStatusCode: failOnStatus
     })
 }
+
+export function updateContact(contactId:string, modifiedContact: any):Cypress.Chainable {
+    return cy.request({
+        method: 'PATCH',
+        url: `/api/v1/contacts/${contactId}`,
+        headers: {
+          Authorization: getBearer(),
+        },
+        body: modifiedContact
+      })
+}

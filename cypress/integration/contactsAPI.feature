@@ -36,3 +36,11 @@ Feature: Contacts API
         Examples:
         | contact_example   |
         | contact_1         |
+
+    Scenario Outline: Update a contact
+        Given I call the create contact endpoint to create "<contact_example>"
+        When I call the update contact endpoint for the created contact with data like "<contact_example_2>"
+        Then I get confirmation of the contact modification
+        Examples:
+        | contact_example   | contact_example_2  |
+        | contact_1         | contact_1_modified |

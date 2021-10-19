@@ -4,7 +4,7 @@
 
 import { Before, Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import { getAuthToken, getBearer } from "../common/AuthToken"
-import { createContact, deleteContact, getAllContacts, getContact } from "./contactsAPIActions";
+import { createContact, deleteContact, getAllContacts, getContact, updateContact } from "./contactsAPIActions";
 
 // This will get called before each scenario
 Before(() => {
@@ -51,6 +51,15 @@ When('I call the get contact endpoint for the created contact', () => {
     getAllContacts().as("GetAllContactsResponse")
  })
 
+ When('I call the update contact endpoint for the created contact with data like {string}', (fixtureName:string) => {
+  cy.get("@ContactCreationResponse").then((response) => {
+    const res = <Cypress.Response<any>> <unknown> response
+    cy.fixture(fixtureName).as("updateData").then((contactData) => {
+      updateContact(res.body.id, contactData).as("ContactUpdateResponse")
+    })
+  })
+})
+
  Then('I get confirmation of the contact creation', () => {
   cy.get("@ContactCreationResponse").then((response) => {
      const res = <Cypress.Response<any>> <unknown> response
@@ -69,6 +78,20 @@ Then('I get confirmation of the contact deletion', () => {
   cy.get("@ContactDeletionResponse").then((response) => {
      const res = <Cypress.Response<any>> <unknown> response
      console.log(res)
+  })
+})
+
+Then('I get confirmation of the contact modification', () => {
+  cy.get("@ContactUpdateResponse").then((response) => {
+     const res = <Cypress.Response<any>> <unknown> response
+     cy.get("@updateData").then((data) => {
+        const expectedData = <any> <unknown> data
+        expect(res.body.firstName).to.equal(expectedData.firstName)
+        expect(res.body.lastName).to.equal(expectedData.lastName)
+        expect(res.body.email).to.equal(expectedData.email)
+        expect(res.body.phone).to.equal(expectedData.phone)
+        expect(res.body.mobile).to.equal(expectedData.mobile)
+     })
   })
 })
 
