@@ -1,0 +1,20 @@
+{
+  "name": "cypress-exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "open": "cypress open",
+    "test": "cypress run"
+  },
+  "author": "Chema Herrerias",
+  "devDependencies": {
+    "@types/cypress-cucumber-preprocessor": "^4.0.1",
+    "cypress": "^8.6.0",
+    "cypress-cucumber-preprocessor": "^4.3.0",
+    "typescript": "^4.4.4"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  }
+}
